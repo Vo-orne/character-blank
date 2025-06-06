@@ -7,5 +7,5 @@ data class ClassCharacteristics( // bloc "E"
     var will: Int = 0,
     var attackMod: Int = 0,
     var skillPoints: Int = 0,
-    var traits: String = ""
+    var cCTraits: String = ""
 )

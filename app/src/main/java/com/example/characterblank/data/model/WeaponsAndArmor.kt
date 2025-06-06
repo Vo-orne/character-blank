@@ -1,7 +1,7 @@
 package com.example.characterblank.data.model
 
 data class WeaponsAndArmor( // bloc "Д"
-    var shield: Boolean = false,
+    var wAAShield: Boolean = false,
     var lightArmor: Boolean = false,
     var mediumArmor: Boolean = false,
     var heavyArmor: Boolean = false,

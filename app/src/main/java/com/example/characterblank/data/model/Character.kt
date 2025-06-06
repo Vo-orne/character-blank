@@ -24,11 +24,11 @@ data class Character(
     @Embedded val classCharacteristics: ClassCharacteristics = ClassCharacteristics(),    // Е
     @Embedded val attacks: Attacks = Attacks(),                                           // Ж
     @Embedded val armor: Armor = Armor(),                                                 // З
-    var traits: String = "",                                                              // И
+    var characterTraits: String = "",                                                              // И
     @Embedded val equipment: Equipment = Equipment(),                                     // К
     @Embedded val spells: Spells = Spells(),                                              // Л
     var backstory: String = "",                                                           // H
     var defeatedMonsters: String = "",                                                    // O
     var damageRecord: String = "",                                                        // П
-    var notes: String = "",                                                               // P
+    var characterNotes: String = "",                                                               // P
 )
