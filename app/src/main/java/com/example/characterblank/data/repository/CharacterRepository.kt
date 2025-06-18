@@ -1,24 +1,16 @@
 package com.example.characterblank.data.repository
 
-import com.example.characterblank.data.database.CharacterDao
-import com.example.characterblank.data.model.Character
 import kotlinx.coroutines.flow.Flow
+import com.example.characterblank.data.model.Character
 
-class CharacterRepository(private val dao: CharacterDao) {
+interface CharacterRepository {
+    fun getAllCharacters(): Flow<List<Character>>
 
-    fun getAllCharacters(): Flow<List<Character>> = dao.getAllCharacters()
+    suspend fun getCharacterById(id: Int): Character?
 
-    suspend fun getCharacterById(id: Int): Character? = dao.getCharacterById(id)
+    suspend fun insertCharacter(character: Character)
 
-    suspend fun insertCharacter(character: Character) {
-        dao.insertCharacter(character)
-    }
+    suspend fun updateCharacter(character: Character)
 
-    suspend fun updateCharacter(character: Character) {
-        dao.updateCharacter(character)
-    }
-
-    suspend fun deleteCharacter(character: Character) {
-        dao.deleteCharacter(character)
-    }
+    suspend fun deleteCharacter(character: Character)
 }
