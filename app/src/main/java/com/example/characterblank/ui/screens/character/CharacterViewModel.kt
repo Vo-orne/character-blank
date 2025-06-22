@@ -31,6 +31,18 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
+    fun saveCharacter() {
+        viewModelScope.launch {
+            _character.value?.let {
+                if (it.id == 0) {
+                    repository.insertCharacter(it)
+                } else {
+                    repository.updateCharacter(it)
+                }
+            }
+        }
+    }
+
     fun createNewCharacter(character: Character) {
         viewModelScope.launch {
             repository.insertCharacter(character)
