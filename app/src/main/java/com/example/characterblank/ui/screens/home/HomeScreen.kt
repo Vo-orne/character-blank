@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Settings
@@ -27,6 +28,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.characterblank.data.model.Character
@@ -93,13 +95,20 @@ fun CharacterCard(
                 portraitUri?.startsWith("android.resource://") == true -> {
                     // Extract resource name from URI
                     val resName = portraitUri.substringAfterLast("/")
-                    AsyncPreviewImage(resName)
+                    AsyncPreviewImage(
+                        resName,
+                        modifier = Modifier
+                        .size(64.dp)
+                        .clip(CircleShape)
+                    )
                 }
                 !portraitUri.isNullOrEmpty() -> {
                     AsyncImage(
                         model = portraitUri,
                         contentDescription = "Portrait",
-                        modifier = Modifier.size(64.dp)
+                        modifier = Modifier
+                            .size(64.dp)
+                            .clip(CircleShape)
                     )
                 }
             }
@@ -115,7 +124,7 @@ fun CharacterCard(
 
 @SuppressLint("DiscouragedApi")
 @Composable
-fun AsyncPreviewImage(resourceName: String) {
+fun AsyncPreviewImage(resourceName: String, modifier: Modifier) {
     // Get the Android context object from the Compose environment
     val context = androidx.compose.ui.platform.LocalContext.current
     // Remember (cache) the result of finding the resource ID by name (for example, "elf_male")
@@ -130,7 +139,7 @@ fun AsyncPreviewImage(resourceName: String) {
         androidx.compose.foundation.Image(
             painter = painterResource(id = resId),
             contentDescription = "Portrait",
-            modifier = Modifier.size(64.dp)
+            modifier = modifier
         )
     }
 }

@@ -1,5 +1,6 @@
 package com.example.characterblank.ui.screens.character
 
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
@@ -27,7 +29,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -59,33 +63,40 @@ fun CharacterFormScreen(
             )
         }
     ) { padding ->
-        LazyColumn(modifier = Modifier.padding(padding)) {
+        LazyColumn(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(padding)
+        ) {
             item {
-                CharacterFormSection(
-                    sectionLetter = "M",
-                    title = "Portrait",
-                    content = {
-                        val portraitUri = character.portraitUri
-                        portraitUri?.let {
-                            when {
-                                portraitUri.startsWith("android.resource://") -> {
-                                    // Extract resource name from URI
-                                    val resName = portraitUri.substringAfterLast("/")
-                                    AsyncPreviewImage(resName)
-                                }
+                val portraitUri = character.portraitUri
+                portraitUri?.let {
+                    when {
+                        portraitUri.startsWith("android.resource://") -> {
+                            // Extract resource name from URI
+                            val resName = portraitUri.substringAfterLast("/")
+                            AsyncPreviewImage(
+                                resName,
+                                modifier = Modifier
+                                    .size(240.dp)
+                                    .clip(CircleShape)
+                            )
+                        }
 
-                                portraitUri.isNotEmpty() -> {
-                                    AsyncImage(
-                                        model = portraitUri,
-                                        contentDescription = "Portrait",
-                                        modifier = Modifier.size(64.dp)
+                        portraitUri.isNotEmpty() -> {
+                            AsyncImage(
+                                model = portraitUri,
+                                contentDescription = "Portrait",
+                                modifier = Modifier
+                                    .size(240.dp)
+                                    .clip(CircleShape)
+                                    .combinedClickable(
+                                        onClick = {},
+                                        onLongClick = { /* TODO: implement image change */ }
                                     )
-                                }
-                            }
-                        } ?: Text("No portrait available")
-                    },
-                    onEdit = {}
-                )
+                            )
+                        }
+                    }
+                } ?: Text("No portrait available")
             }
             item {
                 CharacterFormSection(
